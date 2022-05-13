@@ -45,6 +45,7 @@ def view_account():
 
 
 def withdraw():
+    # the withdrawal function starts here
     # only withdraw within daily limit $100 (balance +withdraw amount <=100) for checking account if balance = 0
     # saving account: only withdraw or transfer once per month
     # transaction.txt: TID,date, CID,type,BSB,AccountNo,amount,balance
