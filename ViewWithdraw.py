@@ -43,7 +43,6 @@ def view_account():
             count+=1
     return dict2, dict3
 
-
 def withdraw():
     # the withdrawal function starts here
     # only withdraw within daily limit $100 (balance +withdraw amount <=100) for checking account if balance = 0
@@ -160,11 +159,101 @@ def withdraw():
     else:
         print('selection is not in the list. Please try again!')
         withdraw()
+def viewTransaction():
+    view_account()
+    view_select = int(input(' view transaction history of account number: '))
+    if view_select in dict3['OrderNo']:
+        try:
+            transaction_file = open('transaction.txt','r')
+            transaction_file.close()
+        except FileNotFoundError:
+            transaction_file = open('transaction.txt','w')
+            print('This is transaction history',file = transaction_file)
+            transaction_file.close()
+        with open('transaction.txt','r+') as transaction_file:
+            dict4_string = ''
+            for line in transaction_file:
+                dict4_string += line
+                dict4_list = dict4_string.split('\n')
+                dict4_list.remove('')
+                if 'This is transaction history' in dict4_list:
+                    dict4_list.remove('This is transaction history')
+            for el in dict4_list:
+                if dict3['ACID'][view_select -1] == el.split()[1]:
+                    print("{0:-^15s}{1:-^15s}{2:-^15s}{3:-^15s}{4:-^15s}{5:-^15s}{6:-^15s}{7:-^15s}{8:-^15s}---".format('TransactionID', 'AccountID','Date','CustomerID','Activity','BSB','AccountNo','Amount','Balance'))
+                    el1,el2,el3,el4,el5,el6,el7,el8,el9 = el.split()
+                    print("{0:^15s}{1:^15s}{2:^15s}{3:^15s}{4:^15s}{5:^15s}{6:^15s}{7:^15s}{8:^15s}".format(el1,el2,el3,el4,el5,el6,el7,el8,el9))
+
+
+
+def Transfer():
+    view_account()
+    while True:
+        try:
+            transfer_from = int(input('Please select account you want to transfer from:'))
+            if transfer_from in dict3['OrderNo']:
+
+                if int(dict3['Balance'][transfer_from-1]) > 0:
+                    while True:
+                        try:
+                            request_amount = int(input('How much you want to transfer:'))
+                            if request_amount <= int(dict3['Balance'][transfer_from-1]):
+                                view_account()
+                                while True:
+                                    transfer_to = int(input('Please select account you want to transfer to:'))
+                                    if transfer_to in dict3['OrderNo']:
+                                        dict3['Balance'][transfer_from-1] = str(int(dict3['Balance'][transfer_from-1])-request_amount)
+                                        dict3['Balance'][transfer_to-1] = str(int(dict3['Balance'][transfer_from-1])+request_amount)
+                                        # function to update transfer transaction here
+                                        break
+                                    else:
+                                        print('selection is not in the list')
+                                        answer_to = input('Do you want to cancel transaction?(Y/N):')
+                                        if answer_to == 'Y' or answer_to =='y':
+                                            break
+                                break
+                            else:
+                                print('Not enough money to transfer')
+
+                            break
+                        except ValueError:
+                            print('invalid amount, try again')
+                            answer_to = input('Do you want to cancel transaction?(Y/N):')
+                            if answer_to == 'Y' or answer_to =='y':
+                                break
+                else:
+                    print('Not enough money to transfer')
+            else:
+                print('selection is not in the list, try again')
+                answer_to = input('Do you want to cancel transaction?(Y/N):')
+                if answer_to == 'Y' or answer_to =='y':
+                    break
+
+
+        except ValueError:
+            print('invalid entry. Please try again')
+            answer_to = input('Do you want to cancel transaction?(Y/N):')
+            if answer_to == 'Y' or answer_to =='y':
+                break
+def Delete():
+    view_account()
+    while True:
+        try:
+            select_account = int(input('Please select account you want to delete:'))
+            if transfer_from in dict3['OrderNo']:
+                if dict3['Balance'][select_account-1] =! str(0):
+                    print('Unable to delete account, please bring the balance to nil before proceeding')
+                else:
+                    dict2['ACID'].remove(dict3['ACID'][select_account-1]).append(dict3['ACID'][select_account-1])
+                    dict2
+
+
+
 
 dict2={}
 dict3={}
 ID = input('ID:')
-withdraw()
+Transfer()
 
 
 
