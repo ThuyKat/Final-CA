@@ -635,7 +635,7 @@ class Customer(object):
                                                     RAccountNo =int(input('AccountNo:'))
                                                     RName =str(input('Account Name:'))
                                                     Reference =str(input('Reference:'))
-                                                    if len(RBSB) == 6 and len(RAccountNo)==9: # check for length of BSB and AccountNo
+                                                    if len(str(RBSB)) == 6 and len(str(RAccountNo))==9: # check for length of BSB and AccountNo
                                                         CID = IDinput
                                                         account1=CheckingAccount(CID)
                                                         account1.send(request_amount,select_account)

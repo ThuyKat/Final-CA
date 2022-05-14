@@ -250,7 +250,7 @@ def Delete():
 # to be continue code, problem is deleting one account will create changes in ACID order and there is a chance of dubplicate
 # Either re-organise ACID and print a new list of ACID or replace deleted line with a 0.
 # in case of replacing it with a 0, need to be carefully check for detail extractions on other part
-# might be the best way is re-organise ACID and print a new list than leaving an empty line. 
+# might be the best way is re-organise ACID and print a new list than leaving an empty line.
 
 
 dict2={}
